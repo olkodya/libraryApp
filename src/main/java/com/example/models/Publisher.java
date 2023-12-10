@@ -9,6 +9,7 @@ public class Publisher {
 
     @Id
     @Column (name = "publisher_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column (name = "publisher_name")
     String name;

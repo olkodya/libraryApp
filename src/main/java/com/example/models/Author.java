@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table (name = "authors")
+@Table(name = "authors")
 public class Author {
 
     @Id
@@ -15,14 +15,11 @@ public class Author {
     @Column(name = "author_name")
     private String name;
 
-//    @ManyToMany(mappedBy = "book_id")
-//    private Collection<Book> author_id;
     public Author() {
 
     }
 
-    public Author(Long id, String name) {
-        this.id = id;
+    public Author(String name) {
         this.name = name;
     }
 
@@ -42,12 +39,11 @@ public class Author {
         return id;
     }
 
-
-//    public Collection<Book> getAuthor_id() {
-//        return author_id;
-//    }
-//
-//    public void setAuthor_id(Collection<Book> author_id) {
-//        this.author_id = author_id;
-//    }
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

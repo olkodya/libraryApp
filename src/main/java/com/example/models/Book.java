@@ -10,6 +10,7 @@ import java.util.Collection;
 @Table (name = "books")
 public class Book {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "book_id")
     private Long id;
 
@@ -34,17 +35,12 @@ public class Book {
 
     }
 
-    public Book(Long id, String isbn, String book_name, Integer pages, BigDecimal price, Integer copiesAmount) {
-        this.id = id;
+    public Book(String isbn, String book_name, Integer pages, BigDecimal price, Integer copiesAmount) {
         this.isbn = isbn;
         this.book_name = book_name;
         this.pages = pages;
         this.price = price;
         this.copiesAmount = copiesAmount;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getId() {

@@ -1,9 +1,6 @@
 package com.example.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table (name = "cities")
@@ -11,6 +8,7 @@ public class City {
 
     @Id
     @Column (name = "city_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column (name = "city_name")
