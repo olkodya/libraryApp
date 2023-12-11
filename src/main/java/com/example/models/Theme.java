@@ -1,6 +1,8 @@
 package com.example.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table (name = "themes")
@@ -14,11 +16,12 @@ public class Theme {
     @Column(name = "theme_name")
     private String name;
 
+    @ManyToMany(mappedBy = "themes")
+    List<Book> books = new ArrayList<>();
     public Theme() {
     }
 
-    public Theme(Long id, String name) {
-        this.id = id;
+    public Theme(String name) {
         this.name = name;
     }
 
@@ -36,5 +39,21 @@ public class Theme {
 
     public Long getId() {
         return id;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
+    @Override
+    public String toString() {
+        return "Theme{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

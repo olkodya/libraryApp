@@ -8,7 +8,7 @@ import org.hibernate.Transaction;
 import java.util.List;
 
 public class ThemeDAO {
-    public Theme findById(int id) {
+    public Theme findById(Long id) {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Theme.class, id);
     }
 

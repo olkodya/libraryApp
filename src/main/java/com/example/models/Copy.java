@@ -1,9 +1,11 @@
 package com.example.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table (name = "copies")
+@Table(name = "copies",
+        uniqueConstraints = @UniqueConstraint(name = "copies_inventory_num_key", columnNames = "inventory_num"))
 public class Copy {
     @Id
     @Column (name = "copy_id")
@@ -13,7 +15,11 @@ public class Copy {
     @Column (name = "inventory_num")
     private String inventory_num;
 
-    //book_id???
+    @OneToMany(mappedBy = "copy")
+    private List<Borrow> borrows;
+    @ManyToOne
+    @JoinColumn(name = "book_id", referencedColumnName = "book_id")
+    private Book book;
 
     public Copy() {
 
@@ -30,10 +36,6 @@ public class Copy {
 
     public String getInventory_num() {
         return inventory_num;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getId() {

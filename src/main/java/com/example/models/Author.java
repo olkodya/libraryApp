@@ -1,7 +1,7 @@
 package com.example.models;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "authors")
@@ -15,6 +15,13 @@ public class Author {
     @Column(name = "author_name")
     private String name;
 
+    @ManyToMany(mappedBy = "authors")
+    List<Book> books;
+
+    public Author(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
     public Author() {
 
     }

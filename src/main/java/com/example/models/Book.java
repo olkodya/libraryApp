@@ -1,36 +1,47 @@
 package com.example.models;
 
-import jdk.jfr.Name;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
-@Table (name = "books")
+@Table(name = "books",
+        uniqueConstraints = @UniqueConstraint(name = "books_isbn_key", columnNames = {"isbn"})
+)
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "book_id")
+    @Column(name = "book_id")
     private Long id;
 
-    @Column (name = "isbn")
+    @Column(name = "isbn")
     private String isbn;
 
-    @Column (name = "book_name")
+    @Column(name = "book_name")
     private String book_name;
 
-    @Column (name = "pages")
+    @Column(name = "pages")
     private Integer pages;
 
-    @Column (name = "price")
+    @Column(name = "price")
     private BigDecimal price;
 
-    @Column (name = "copies_amount")
+    @Column(name = "copies_amount")
     private Integer copiesAmount;
 
-//    @ManyToMany
-//    private Collection<Author> book_id;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "publisher_id", referencedColumnName = "publisher_id")
+    private Publisher publisher;
+
+    @ManyToMany
+    private List<Author> authors;
+
+    @ManyToMany
+    private List<Theme> themes;
+
+    @OneToMany(mappedBy = "book")
+    private List<Copy> copies;
+
     public Book() {
 
     }
@@ -87,12 +98,27 @@ public class Book {
         this.copiesAmount = copiesAmount;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-//    public Collection<Author> getBook_id() {
-//        return book_id;
-//    }
-//
-//    public void setBook_id(Collection<Author> book_id) {
-//        this.book_id = book_id;
-//    }
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", isbn='" + isbn + '\'' +
+                ", book_name='" + book_name + '\'' +
+                ", pages=" + pages +
+                ", price=" + price +
+                ", copiesAmount=" + copiesAmount +
+                '}';
+    }
 }
