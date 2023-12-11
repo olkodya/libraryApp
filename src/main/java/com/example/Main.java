@@ -5,6 +5,7 @@ import com.example.models.Theme;
 import com.example.services.CityService;
 import com.example.services.PublisherService;
 import com.example.services.ThemeService;
+import com.example.utils.Menu;
 
 import java.util.List;
 
@@ -24,6 +25,8 @@ public class Main {
         PublisherService publisherService = new PublisherService();
         Publisher publisher = publisherService.findByID(8L);
         System.out.println(publisher.getCity().getName());
+
+        Menu.run();
 
     }
 }
