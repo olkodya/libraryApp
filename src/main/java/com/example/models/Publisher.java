@@ -4,17 +4,17 @@ package com.example.models;
 import javax.persistence.*;
 
 @Entity
-@Table (name = "publishers")
+@Table(name = "publishers")
 public class Publisher {
-    @Id
-    @Column (name = "publisher_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column (name = "publisher_name")
+    @Column(name = "publisher_name")
     String name;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "city_id")
     City city;
+    @Id
+    @Column(name = "publisher_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     public Publisher(String name, City city) {
         this.name = name;
@@ -41,11 +41,11 @@ public class Publisher {
         this.city = city;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

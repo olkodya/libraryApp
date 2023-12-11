@@ -3,23 +3,22 @@ package com.example.models;
 import javax.persistence.*;
 
 @Entity
-@Table (name = "cities")
+@Table(name = "cities")
 public class City {
 
     @Id
-    @Column (name = "city_id")
+    @Column(name = "city_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (name = "city_name")
+    @Column(name = "city_name")
     private String name;
 
     public City() {
 
     }
 
-    public City(Long id, String name) {
-        this.id = id;
+    public City(String name) {
         this.name = name;
     }
 

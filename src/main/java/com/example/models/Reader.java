@@ -2,20 +2,19 @@ package com.example.models;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "readers",
         uniqueConstraints = @UniqueConstraint(name = "readers_reader_card_num_key", columnNames = {"reader_card_num"}))
 public class Reader {
+    @OneToMany(mappedBy = "reader")
+    List<Borrow> borrows;
     @Id
     @Column(name = "reader_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToMany(mappedBy = "reader")
-    List<Borrow> borrows;
-
     @Column(name = "reader_card_num")
     private String cardNum;
 
@@ -31,6 +30,22 @@ public class Reader {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    public Reader(String cardNum, String lastName, String firstName, String middleName, LocalDate birthDate, String phoneNumber) {
+        this.cardNum = cardNum;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.birthDate = birthDate;
+        this.phoneNumber = phoneNumber;
+        borrows = new ArrayList<>();
+    }
+
+    public Reader() {
+
+    }
 
     public Long getId() {
         return id;
@@ -74,6 +89,18 @@ public class Reader {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public void addBorrow(Borrow borrow) {
+        borrows.add(borrow);
+    }
+
+    public List<Borrow> getBorrows() {
+        return borrows;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 }
 

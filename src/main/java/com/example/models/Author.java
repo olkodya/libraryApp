@@ -7,21 +7,20 @@ import java.util.List;
 @Table(name = "authors")
 public class Author {
 
+    @ManyToMany(mappedBy = "authors")
+    List<Book> books;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "author_id")
     private Long id;
-
     @Column(name = "author_name")
     private String name;
-
-    @ManyToMany(mappedBy = "authors")
-    List<Book> books;
 
     public Author(Long id, String name) {
         this.id = id;
         this.name = name;
     }
+
     public Author() {
 
     }
@@ -38,12 +37,12 @@ public class Author {
         this.name = name;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override

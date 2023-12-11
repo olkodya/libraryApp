@@ -20,6 +20,10 @@ public class ThemeService {
         themeDAO.update(theme);
     }
 
+    public void delete(Theme theme) {
+        themeDAO.delete(theme);
+    }
+
     public List<Theme> findAll() {
         return themeDAO.findAll();
     }

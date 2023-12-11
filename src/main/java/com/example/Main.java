@@ -1,10 +1,10 @@
 package com.example;
 
+import com.example.models.Borrow;
 import com.example.models.Publisher;
+import com.example.models.Reader;
 import com.example.models.Theme;
-import com.example.services.CityService;
-import com.example.services.PublisherService;
-import com.example.services.ThemeService;
+import com.example.services.*;
 import com.example.utils.Menu;
 
 import java.util.List;
@@ -26,7 +26,32 @@ public class Main {
         Publisher publisher = publisherService.findByID(8L);
         System.out.println(publisher.getCity().getName());
 
-        Menu.run();
+        //Menu.run();
+        ReaderService readerService = new ReaderService();
 
+        Reader reader = new Reader();
+        Borrow borrow = new Borrow();
+        Reader reader1 = readerService.findById(1L);
+//        borrow.setReader(reader1);
+        BorrowService borrowService = new BorrowService();
+        borrow = borrowService.findById(2L);
+
+//        borrowService.save(borrow);
+//        System.out.println(borrow.getReader().getFirstName());
+//        System.out.println(reader.getBorrows());
+        System.out.println(borrow.getReader().getFirstName());
+
+        List<Borrow> borrows = borrowService.findAll();
+        for (Borrow value : borrows) {
+            System.out.println(value.getReader().getFirstName() + value.getReader().getId());
+        }
+        List<Reader> readers = readerService.findAll();
+        for (Reader value : readers) {
+            System.out.println(value.getFirstName() + " " + value.getBorrows());
+            for (Borrow br : value.getBorrows())
+                System.out.println();
+        }
+
+        Menu.run();
     }
 }

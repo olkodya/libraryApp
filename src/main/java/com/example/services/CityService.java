@@ -20,6 +20,10 @@ public class CityService {
         cityDAO.update(city);
     }
 
+    public void delete(City city) {
+        cityDAO.delete(city);
+    }
+
     public List<City> findAll() {
         return cityDAO.findAll();
     }
