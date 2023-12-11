@@ -8,7 +8,7 @@ import org.hibernate.Transaction;
 import java.util.List;
 
 public class ReaderDAO {
-    public Reader findById(int id) {
+    public Reader findById(Long id) {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Reader.class, id);
     }
 
