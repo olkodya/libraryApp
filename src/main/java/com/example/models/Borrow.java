@@ -18,11 +18,11 @@ public class Borrow {
     @Column(name = "return_date", nullable = true)
 
     private LocalDateTime returnDate;
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reader_id", referencedColumnName = "reader_id")
     private Reader reader;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "copy_id", referencedColumnName = "copy_id")
     private Copy copy;
 
@@ -64,5 +64,13 @@ public class Borrow {
 
     public Long getId() {
         return id;
+    }
+
+    public Copy getCopy() {
+        return copy;
+    }
+
+    public void setCopy(Copy copy) {
+        this.copy = copy;
     }
 }

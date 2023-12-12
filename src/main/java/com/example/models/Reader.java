@@ -9,7 +9,8 @@ import java.util.List;
 @Table(name = "readers",
         uniqueConstraints = @UniqueConstraint(name = "readers_reader_card_num_key", columnNames = {"reader_card_num"}))
 public class Reader {
-    @OneToMany(mappedBy = "reader")
+
+    @OneToMany(mappedBy = "reader", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Borrow> borrows;
     @Id
     @Column(name = "reader_id")
@@ -101,6 +102,10 @@ public class Reader {
 
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public void setBorrows(List<Borrow> borrows) {
+        this.borrows = borrows;
     }
 }
 

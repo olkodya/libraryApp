@@ -16,9 +16,9 @@ public class Copy {
     @Column(name = "inventory_num")
     private String inventory_num;
 
-    @OneToMany(mappedBy = "copy")
+    @OneToMany(mappedBy = "copy", cascade = CascadeType.ALL)
     private List<Borrow> borrows;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id", referencedColumnName = "book_id")
     private Book book;
 

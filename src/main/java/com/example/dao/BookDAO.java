@@ -1,42 +1,42 @@
 package com.example.dao;
 
 import com.example.models.Book;
-import com.example.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
 
 public class BookDAO {
+    private final Session session;
+
+    public BookDAO(Session session) {
+        this.session = session;
+
+    }
     public Book findById(Long id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Book.class, id);
+        return session.get(Book.class, id);
     }
 
     public void save(Book book) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.save(book);
         transaction.commit();
-        session.close();
     }
 
     public void update(Book book) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
+        //book.setAuthors(null);
         session.update(book);
         transaction.commit();
-        session.close();
     }
 
     public void delete(Book book) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.delete(book);
         transaction.commit();
-        session.close();
     }
 
     public List<Book> findAll() {
-        return (List<Book>) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From Book").list();
+        return session.createQuery("From Book").list();
     }
 }

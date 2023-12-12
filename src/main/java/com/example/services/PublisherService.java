@@ -2,25 +2,44 @@ package com.example.services;
 
 import com.example.dao.PublisherDAO;
 import com.example.models.Publisher;
+import com.example.utils.HibernateSessionFactoryUtil;
+import org.hibernate.Session;
 
 import java.util.List;
 
 public class PublisherService {
-    PublisherDAO publisherDAO = new PublisherDAO();
+
 
     public Publisher findByID(final Long id) {
-        return publisherDAO.findById(id);
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        PublisherDAO publisherDAO = new PublisherDAO(session);
+        try (session) {
+            return publisherDAO.findById(id);
+
+        }
     }
 
     public void save(Publisher publisher) {
-        publisherDAO.save(publisher);
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        PublisherDAO publisherDAO = new PublisherDAO(session);
+        try (session) {
+            publisherDAO.save(publisher);
+        }
     }
 
     public void update(Publisher publisher) {
-        publisherDAO.update(publisher);
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        PublisherDAO publisherDAO = new PublisherDAO(session);
+        try (session) {
+            publisherDAO.update(publisher);
+        }
     }
 
     public List<Publisher> findAll() {
-        return publisherDAO.findAll();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        PublisherDAO publisherDAO = new PublisherDAO(session);
+        try (session) {
+            return publisherDAO.findAll();
+        }
     }
 }

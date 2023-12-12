@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class Publisher {
     @Column(name = "publisher_name")
     String name;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "city_id")
     City city;
     @Id

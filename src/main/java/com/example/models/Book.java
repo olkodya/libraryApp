@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "books",
@@ -30,15 +31,17 @@ public class Book {
     @Column(name = "copies_amount")
     private Integer copiesAmount;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 
-    @ManyToMany
-    private List<Author> authors;
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JoinTable(name = "books_authors", joinColumns = {@JoinColumn(name = "book_id")}
+            , inverseJoinColumns = {@JoinColumn(name = "author_id")})
+    private List<Author> authors = new ArrayList<>();
 
-    @ManyToMany
-    private List<Theme> themes;
+//    @ManyToMany
+//    private List<Theme> themes;
 
     @OneToMany(mappedBy = "book")
     private List<Copy> copies;
@@ -55,7 +58,7 @@ public class Book {
         this.copiesAmount = copiesAmount;
         this.publisher = publisher;
         authors = new ArrayList<>();
-        themes = new ArrayList<>();
+        //themes = new ArrayList<>();
         this.authors = authors;
     }
 
@@ -115,6 +118,24 @@ public class Book {
         this.publisher = publisher;
     }
 
+    public void addAuthor(Author author) {
+        authors.add(author);
+        author.books.add(this);
+    }
+
+    public void removeAuthor(Author author) {
+        authors.remove(author);
+        author.getBooks().remove(this);
+    }
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -125,5 +146,19 @@ public class Book {
                 ", price=" + price +
                 ", copiesAmount=" + copiesAmount +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Book book = (Book) o;
+        return Objects.equals(this.id, ((Book) o).id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, isbn, book_name, pages, price, copiesAmount, publisher, authors);
     }
 }

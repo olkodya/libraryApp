@@ -2,6 +2,7 @@ package com.example.utils;
 
 import com.example.models.Book;
 import com.example.models.City;
+import com.example.models.Reader;
 import com.example.services.*;
 
 import java.util.List;
@@ -80,7 +81,7 @@ public class Menu {
                     System.out.println("Get all cities");
                     cities = cityService.findAll();
                     for (int i = 0; i < cities.size(); i++) {
-                        System.out.println(i + " " + cities.get(i).getName());
+                        System.out.println((i + 1) + " " + cities.get(i).getName());
                     }
                     break;
                 case 2:
@@ -173,8 +174,70 @@ public class Menu {
 //                    break;
                     //cityService.
                 case 4:
+//                    System.out.println("Update city");
+//                    cities = cityService.findAll();
+//                    System.out.println("Choose the city from 1 to "+ cities.size());
+//                    for (int i = 0; i < cities.size(); i++) {
+//                        System.out.println((i + 1) + " " + cities.get(i).getName());
+//                    }
+//                    choice = ints.nextInt();
+//                    city = cities.get(choice - 1);
+//                    System.out.println("Enter the name of the city");
+//                    name = scanner.nextLine();
+//                    city.setName(name);
+//                    cityService.update(city);
+                    break;
+                case 5:
+                    break;
+                case 0:
+                    return;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+
+        }
+
+    }
 
 
+    public static void readerMenu() {
+        Scanner scanner = new Scanner(System.in);
+        Scanner ints = new Scanner(System.in);
+        while (true) {
+            List<Reader> readers;
+            Reader reader;
+            int choice;
+            String name;
+            printMenu();
+            int option = ints.nextInt();
+            switch (option) {
+                case 1:
+                    System.out.println("Get all cities");
+                    readers = readerService.findAll();
+                    for (int i = 0; i < readers.size(); i++) {
+                        System.out.println(i + " " + readers.get(i).getCardNum() + " " + readers.get(i).getFirstName());
+                    }
+                    break;
+                case 2:
+//                    System.out.println("Add city");
+//                    System.out.println("Enter city name");
+//                    name = scanner.nextLine();
+//                    city = new City(name);
+//                    cityService.save(city);
+//                    break;
+                case 3:
+//                    System.out.println("Delete city");
+//                    cities = cityService.findAll();
+//                    System.out.println("Choose the city from 1 to"+ cities.size());
+//                    for (int i = 0; i < cities.size(); i++) {
+//                        System.out.println((i + 1) + " " + cities.get(i).getName());
+//                    }
+//                    choice = ints.nextInt();
+//                    city = cities.get(choice - 1);
+//                    cityService.delete(city);
+//                    break;
+                    //cityService.
+                case 4:
 //                    System.out.println("Update city");
 //                    cities = cityService.findAll();
 //                    System.out.println("Choose the city from 1 to "+ cities.size());
@@ -209,6 +272,7 @@ public class Menu {
             int option = scanner.nextInt();
             switch (option) {
                 case 1:
+                    bookMenu();
                     break;
                 case 2:
                     break;
@@ -220,6 +284,7 @@ public class Menu {
                 case 5:
                     break;
                 case 6:
+                    readerMenu();
                     break;
                 case 7:
                     break;
@@ -232,10 +297,6 @@ public class Menu {
                 default:
                     System.out.println("Invalid option. Please, try again.");
             }
-            printMenu();
-
         }
-
-
     }
 }
