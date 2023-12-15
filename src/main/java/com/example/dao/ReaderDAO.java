@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class ReaderDAO {
@@ -50,4 +51,13 @@ public class ReaderDAO {
         query.setParameter("param", "%" + value + "%");
         return query.list();
     }
+
+    public List<Reader> findByDate(String param, LocalDate value) {
+        Transaction transaction = session.beginTransaction();
+        String hql = String.format("from Reader where DATE(%s) = DATE(:param)", param);
+        Query<Reader> query = session.createQuery(hql, Reader.class);
+        query.setParameter("param", value);
+        return query.list();
+    }
+
 }

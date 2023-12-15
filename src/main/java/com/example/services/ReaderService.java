@@ -5,6 +5,7 @@ import com.example.models.Reader;
 import com.example.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class ReaderService {
@@ -57,4 +58,13 @@ public class ReaderService {
             return readerDAO.findByParameter(param, value);
         }
     }
+
+    public List<Reader> findByDate(String param, LocalDate value) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        try (session) {
+            ReaderDAO readerDAO = new ReaderDAO(session);
+            return readerDAO.findByDate(param, value);
+        }
+    }
+
 }

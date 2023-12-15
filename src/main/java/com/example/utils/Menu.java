@@ -864,7 +864,7 @@ public class Menu {
                     System.out.println("Search reader by birth date");
                     System.out.println("Enter to search");
                     date = getDate();
-                    readers = readerService.findByParameter("birthDate", date);
+                    readers = readerService.findByDate("birthDate", date);
                     System.out.println("Founded readers: ");
                     printReaders(readers);
                     break;
