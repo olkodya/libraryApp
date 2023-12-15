@@ -1,15 +1,15 @@
 package com.example.dao;
 
 import com.example.models.Author;
-import com.example.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
 public class AuthorDAO {
 
-    private Session session;
+    private final Session session;
 
     public AuthorDAO(Session session) {
         this.session = session;
@@ -39,6 +39,14 @@ public class AuthorDAO {
     }
 
     public List<Author> findAll() {
-        return (List<Author>) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From Author").list();
+        return (List<Author>) session.createQuery("From Author order by id").list();
+    }
+
+    public List<Author> findByParameter(String param, Object value) {
+        Transaction transaction = session.beginTransaction();
+        String hql = String.format("from Author where upper(%s) like upper(:param)", param);
+        Query<Author> query = session.createQuery(hql, Author.class);
+        query.setParameter("param", "%" + value + "%");
+        return query.list();
     }
 }

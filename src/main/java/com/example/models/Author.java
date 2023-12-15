@@ -9,7 +9,7 @@ import java.util.Set;
 @Table(name = "authors")
 public class Author {
 
-    @ManyToMany(mappedBy = "authors", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "authors", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     Set<Book> books = new HashSet<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,13 +60,13 @@ public class Author {
         this.books = books;
     }
 
-    @Override
-    public String toString() {
-        return "Author{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Author{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                '}';
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -77,8 +77,8 @@ public class Author {
         return Objects.equals(this.id, ((Author) o).id);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(books, id, name);
-    }
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(books, id, name);
+//    }
 }

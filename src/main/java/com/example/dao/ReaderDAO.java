@@ -3,6 +3,7 @@ package com.example.dao;
 import com.example.models.Reader;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -39,7 +40,14 @@ public class ReaderDAO {
     }
 
     public List<Reader> findAll() {
-        return (List<Reader>) session.createQuery("From Reader").list();
+        return (List<Reader>) session.createQuery("From Reader order by id").list();
     }
 
+    public List<Reader> findByParameter(String param, Object value) {
+        Transaction transaction = session.beginTransaction();
+        String hql = String.format("from Reader where upper(%s) like upper(:param)", param);
+        Query<Reader> query = session.createQuery(hql, Reader.class);
+        query.setParameter("param", "%" + value + "%");
+        return query.list();
+    }
 }

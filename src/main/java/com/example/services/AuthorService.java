@@ -9,8 +9,6 @@ import java.util.List;
 
 public class AuthorService {
 
-    //AuthorDAO authorDAO = new AuthorDAO();
-
     public Author findById(final Long id) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         try (session) {
@@ -27,12 +25,20 @@ public class AuthorService {
         }
     }
 
-    public void update(final Long id) {
+    public void update(Author author) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        AuthorDAO authorDAO = new AuthorDAO(session);
-        Author author = findById(id);
-        authorDAO.update(author);
+        try (session) {
+            AuthorDAO authorDAO = new AuthorDAO(session);
+            authorDAO.update(author);
+        }
+    }
 
+    public void delete(Author author) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        try (session) {
+            AuthorDAO authorDAO = new AuthorDAO(session);
+            authorDAO.delete(author);
+        }
     }
 
     public List<Author> findAll() {
@@ -40,6 +46,14 @@ public class AuthorService {
         try (session) {
             AuthorDAO authorDAO = new AuthorDAO(session);
             return authorDAO.findAll();
+        }
+    }
+
+    public List<Author> findByParameter(String param, Object value) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        try (session) {
+            AuthorDAO authorDAO = new AuthorDAO(session);
+            return authorDAO.findByParameter(param, value);
         }
     }
 }

@@ -35,6 +35,14 @@ public class BookService {
         }
     }
 
+    public void delete(Book book) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        try (session) {
+            BookDAO bookDAO = new BookDAO(session);
+            bookDAO.delete(book);
+        }
+    }
+
     public List<Book> findAll() {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         try (session) {
@@ -42,4 +50,21 @@ public class BookService {
             return bookDAO.findAll();
         }
     }
+
+    public List<Book> findByParameter(String param, Object value) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        try (session) {
+            BookDAO bookDAO = new BookDAO(session);
+            return bookDAO.findByParameter(param, value);
+        }
+    }
+
+    public List<Book> findByAuthor(String value) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        try (session) {
+            BookDAO bookDAO = new BookDAO(session);
+            return bookDAO.findByAuthor(value);
+        }
+    }
+
 }

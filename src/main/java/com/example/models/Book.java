@@ -2,9 +2,9 @@ package com.example.models;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "books",
@@ -28,37 +28,35 @@ public class Book {
     @Column(name = "price")
     private BigDecimal price;
 
-    @Column(name = "copies_amount")
-    private Integer copiesAmount;
-
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @Column(name = "publish_year")
+    private int publishYear;
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "books_authors", joinColumns = {@JoinColumn(name = "book_id")}
             , inverseJoinColumns = {@JoinColumn(name = "author_id")})
-    private List<Author> authors = new ArrayList<>();
+    private Set<Author> authors = new HashSet<>();
 
-//    @ManyToMany
-//    private List<Theme> themes;
+    @ManyToMany(mappedBy = "books", fetch = FetchType.EAGER)
+    private Set<Theme> themes;
 
-    @OneToMany(mappedBy = "book")
-    private List<Copy> copies;
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    private Set<Copy> copies = new HashSet<>();
 
     public Book() {
 
     }
 
-    public Book(String isbn, String book_name, Integer pages, BigDecimal price, Integer copiesAmount, Publisher publisher, List<Author> authors) {
+    public Book(String isbn, String book_name, Integer pages, BigDecimal price, Publisher publisher, Set<Author> authors) {
         this.isbn = isbn;
         this.book_name = book_name;
         this.pages = pages;
         this.price = price;
-        this.copiesAmount = copiesAmount;
         this.publisher = publisher;
-        authors = new ArrayList<>();
-        //themes = new ArrayList<>();
+        authors = new HashSet<>();
         this.authors = authors;
     }
 
@@ -102,13 +100,7 @@ public class Book {
         this.price = price;
     }
 
-    public Integer getCopiesAmount() {
-        return copiesAmount;
-    }
 
-    public void setCopiesAmount(Integer copiesAmount) {
-        this.copiesAmount = copiesAmount;
-    }
 
     public Publisher getPublisher() {
         return publisher;
@@ -128,25 +120,48 @@ public class Book {
         author.getBooks().remove(this);
     }
 
-    public List<Author> getAuthors() {
+    public Set<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<Author> authors) {
+    public void setAuthors(Set<Author> authors) {
         this.authors = authors;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", isbn='" + isbn + '\'' +
-                ", book_name='" + book_name + '\'' +
-                ", pages=" + pages +
-                ", price=" + price +
-                ", copiesAmount=" + copiesAmount +
-                '}';
+    public Set<Theme> getThemes() {
+        return themes;
     }
+
+    public void setThemes(Set<Theme> themes) {
+        this.themes = themes;
+    }
+
+    public int getPublishYear() {
+        return publishYear;
+    }
+
+    public void setPublishYear(int publishYear) {
+        this.publishYear = publishYear;
+    }
+
+    public Set<Copy> getCopies() {
+        return copies;
+    }
+
+    public void setCopies(Set<Copy> copies) {
+        this.copies = copies;
+    }
+//    @Override
+//    public String toString() {
+//        return "Book{" +
+//                "id=" + id +
+//                ", isbn='" + isbn + '\'' +
+//                ", book_name='" + book_name + '\'' +
+//                ", pages=" + pages +
+//                ", price=" + price +
+//                ", copiesAmount=" + copiesAmount +
+//                '}';
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -159,6 +174,6 @@ public class Book {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, isbn, book_name, pages, price, copiesAmount, publisher, authors);
+        return Objects.hash(id, isbn, book_name, pages, price, publisher, authors);
     }
 }

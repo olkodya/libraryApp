@@ -3,6 +3,7 @@ package com.example.dao;
 import com.example.models.City;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -36,6 +37,23 @@ public class CityDAO {
     }
 
     public List<City> findAll() {
-        return (List<City>) session.createQuery("From City").list();
+        return (List<City>) session.createQuery("From City order by id").list();
+    }
+
+//    public List<City> findByParameter(String param, Object value) {
+//        Transaction transaction = session.beginTransaction();
+//        String hql = String.format("from City where %s = :param", param);
+//        Query<City> query = session.createQuery(hql, City.class);
+//        query.setParameter("param", value);
+//        return query.list();
+//    }
+
+
+    public List<City> findByParameter(String param, Object value) {
+        Transaction transaction = session.beginTransaction();
+        String hql = String.format("from City where upper(%s) like upper(:param)", param);
+        Query<City> query = session.createQuery(hql, City.class);
+        query.setParameter("param", "%" + value + "%");
+        return query.list();
     }
 }

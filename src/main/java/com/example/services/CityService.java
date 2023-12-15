@@ -47,4 +47,13 @@ public class CityService {
             return cityDAO.findAll();
         }
     }
+
+    public List<City> findByParameter(String param, Object value) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        try (session) {
+            CityDAO cityDAO = new CityDAO(session);
+            return cityDAO.findByParameter(param, value);
+        }
+    }
+
 }

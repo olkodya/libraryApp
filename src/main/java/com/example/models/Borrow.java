@@ -2,6 +2,7 @@ package com.example.models;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "borrows")
@@ -18,7 +19,7 @@ public class Borrow {
     @Column(name = "return_date", nullable = true)
 
     private LocalDateTime returnDate;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "reader_id", referencedColumnName = "reader_id")
     private Reader reader;
 
@@ -72,5 +73,18 @@ public class Borrow {
 
     public void setCopy(Copy copy) {
         this.copy = copy;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Borrow borrow = (Borrow) o;
+        return Objects.equals(id, borrow.id) && Objects.equals(borrowDate, borrow.borrowDate) && Objects.equals(returnDate, borrow.returnDate) && Objects.equals(reader, borrow.reader) && Objects.equals(copy, borrow.copy);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, borrowDate, returnDate, reader, copy);
     }
 }

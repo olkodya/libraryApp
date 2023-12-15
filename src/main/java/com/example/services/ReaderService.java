@@ -49,4 +49,12 @@ public class ReaderService {
             return readerDAO.findAll();
         }
     }
+
+    public List<Reader> findByParameter(String param, Object value) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        try (session) {
+            ReaderDAO readerDAO = new ReaderDAO(session);
+            return readerDAO.findByParameter(param, value);
+        }
+    }
 }

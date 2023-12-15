@@ -34,11 +34,26 @@ public class CopyService {
         }
     }
 
+    public void delete(Copy copy) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        CopyDAO copyDAO = new CopyDAO(session);
+        try (session) {
+            copyDAO.delete(copy);
+        }
+    }
     public List<Copy> findAll() {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         CopyDAO copyDAO = new CopyDAO(session);
         try (session) {
             return copyDAO.findAll();
+        }
+    }
+
+    public List<Copy> findByParameter(String param, Object value) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        try (session) {
+            CopyDAO copyDAO = new CopyDAO(session);
+            return copyDAO.findByParameter(param, value);
         }
     }
 }

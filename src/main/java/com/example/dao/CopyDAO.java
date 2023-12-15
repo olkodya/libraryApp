@@ -1,9 +1,9 @@
 package com.example.dao;
 
-import com.example.models.City;
 import com.example.models.Copy;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -30,13 +30,21 @@ public class CopyDAO {
         transaction.commit();
     }
 
-    public void delete(City city) {
+    public void delete(Copy copy) {
         Transaction transaction = session.beginTransaction();
-        session.delete(city);
+        session.delete(copy);
         transaction.commit();
     }
 
     public List<Copy> findAll() {
-        return (List<Copy>) session.createQuery("From Copy").list();
+        return (List<Copy>) session.createQuery("From Copy order by id").list();
+    }
+
+    public List<Copy> findByParameter(String param, Object value) {
+        Transaction transaction = session.beginTransaction();
+        String hql = String.format("from Copy where upper(%s) like upper(:param)", param);
+        Query<Copy> query = session.createQuery(hql, Copy.class);
+        query.setParameter("param", "%" + value + "%");
+        return query.list();
     }
 }

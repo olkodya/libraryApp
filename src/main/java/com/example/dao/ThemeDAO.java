@@ -3,6 +3,7 @@ package com.example.dao;
 import com.example.models.Theme;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -37,7 +38,15 @@ public class ThemeDAO {
     }
 
     public List<Theme> findAll() {
-        return (List<Theme>) session.createQuery("From Theme").list();
+        return (List<Theme>) session.createQuery("From Theme order by id").list();
+    }
+
+    public List<Theme> findByParameter(String param, Object value) {
+        Transaction transaction = session.beginTransaction();
+        String hql = String.format("from Theme where upper(%s) like upper(:param)", param);
+        Query<Theme> query = session.createQuery(hql, Theme.class);
+        query.setParameter("param", "%" + value + "%");
+        return query.list();
     }
 
 }

@@ -50,4 +50,12 @@ public class ThemeService {
             return themeDAO.findAll();
         }
     }
+
+    public List<Theme> findByParameter(String param, Object value) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        try (session) {
+            ThemeDAO themeDAO = new ThemeDAO(session);
+            return themeDAO.findByParameter(param, value);
+        }
+    }
 }

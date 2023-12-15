@@ -3,6 +3,7 @@ package com.example.models;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "copies",
@@ -16,9 +17,9 @@ public class Copy {
     @Column(name = "inventory_num")
     private String inventory_num;
 
-    @OneToMany(mappedBy = "copy", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "copy")
     private List<Borrow> borrows;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "book_id", referencedColumnName = "book_id")
     private Book book;
 
@@ -47,5 +48,26 @@ public class Copy {
 
     public void addBorrow(Borrow borrow) {
         borrows.add(borrow);
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Copy copy = (Copy) o;
+        return Objects.equals(id, copy.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, inventory_num, borrows, book);
     }
 }
