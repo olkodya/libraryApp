@@ -27,8 +27,6 @@ public class Menu {
     private static final ThemeService themeService = new ThemeService();
 
     public static void run() {
-        Scanner scanner = new Scanner(System.in);
-
         while (true) {
             printOptions();
             int option = getNumber();
@@ -93,12 +91,6 @@ public class Menu {
         System.out.println("[0] Exit");
     }
 
-    public static void printBorrowsMenu() {
-        System.out.println("[1] Get all");
-        System.out.println("[2] Borrow book");
-        System.out.println("[3] Return book");
-        System.out.println("[0] Exit");
-    }
 
     public static void printThemeCatalogMenu() {
         System.out.println("[1] Get full theme catalog");
@@ -678,9 +670,8 @@ public class Menu {
 
     public static LocalDate getDate() {
         int year, month, day;
-        boolean flag = false;
+        boolean flag;
         LocalDate date = null;
-        Scanner scanner = new Scanner(System.in);
         LocalDate now = LocalDate.now();
         do {
             try {
@@ -719,7 +710,6 @@ public class Menu {
     public static void updateReaderMenu(Reader reader) {
         Scanner scanner = new Scanner(System.in);
         String name, phoneNumber, cardNum;
-        List<City> cities;
         LocalDate date;
         while (true) {
             printUpdateReader();
@@ -892,7 +882,6 @@ public class Menu {
             List<Reader> readers;
             Reader reader;
             int choice;
-            String name;
             String cardNum, lastName, firstName, middleName, phoneNumber;
             LocalDate date;
             printMenu();
@@ -1162,7 +1151,7 @@ public class Menu {
         Book book;
         int choice;
         while (true) {
-            printUpdatePublisher();
+            printUpdateCopy();
             int option = getNumber();
             switch (option) {
                 case 1:
@@ -1212,10 +1201,7 @@ public class Menu {
 
     public static void searchCopy() {
         Scanner scanner = new Scanner(System.in);
-        String name;
-
         List<Copy> copies;
-        int choice;
         String searchString;
         while (true) {
             searchCopyPrint();
@@ -1628,7 +1614,7 @@ public class Menu {
                         break;
                     }
                     printBorrows(borrows);
-                    System.out.println("Choose the city from 1 to " + borrows.size());
+                    System.out.println("Choose the borrow from 1 to " + borrows.size());
                     choice = getNumber(1, borrows.size());
                     borrow = borrows.get(choice - 1);
                     borrowService.delete(borrow);
@@ -1653,9 +1639,7 @@ public class Menu {
             List<Book> books;
             Book book;
             Theme theme;
-            Borrow borrow;
             int choice;
-            String name;
             printThemeCatalogMenu();
             int option = getNumber();
             switch (option) {
@@ -1666,7 +1650,6 @@ public class Menu {
                     break;
                 case 2:
                     System.out.println("Add book to theme");
-                    System.out.println("Enter city name");
                     books = bookService.findAll();
                     themes = themeService.findAll();
                     printThemes(themes);
