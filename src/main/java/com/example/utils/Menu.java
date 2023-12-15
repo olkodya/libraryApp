@@ -104,7 +104,6 @@ public class Menu {
         System.out.println("[1] Get full theme catalog");
         System.out.println("[2] Add book to theme");
         System.out.println("[3] Remove book from theme");
-        System.out.println("[4] Search book");
         System.out.println("[0] Exit");
     }
 
@@ -1649,8 +1648,6 @@ public class Menu {
 
 
     public static void themeCatalog() {
-        Scanner scanner = new Scanner(System.in);
-        Scanner ints = new Scanner(System.in);
         while (true) {
             List<Theme> themes;
             List<Book> books;
@@ -1702,23 +1699,6 @@ public class Menu {
                     book = books.get(choice - 1);
                     theme.remove(book);
                     themeService.update(theme);
-                    break;
-                case 4:
-//                    System.out.println("Update city");
-//                    cities = cityService.findAll();
-//                    System.out.println("Choose the city from 1 to "+ cities.size());
-//                    for (int i = 0; i < cities.size(); i++) {
-//                        System.out.println((i + 1) + " " + cities.get(i).getName());
-//                    }
-//                    choice = ints.nextInt();
-//                    city = cities.get(choice - 1);
-//                    System.out.println("Enter the name of the city");
-//                    name = scanner.nextLine();
-//                    city.setName(name);
-//                    cityService.update(city);
-                    break;
-                case 5:
-
                     break;
                 case 0:
                     return;
